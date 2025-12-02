@@ -6,7 +6,7 @@ from django.contrib.auth.models import AbstractUser
 
 class ReallyUser(AbstractUser):
     avatar = models.ImageField(upload_to='avatars/', blank=True, null=True,
-                               verbose_name='Аватар', default='avatars/image.jpg')
+                               verbose_name='Аватар', default='avatars/image.png')
     biography = models.CharField(max_length=250, verbose_name="Биография", null=True)
 
     class Meta(AbstractUser.Meta):

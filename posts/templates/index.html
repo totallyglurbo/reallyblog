@@ -27,12 +27,42 @@
                                     </div>
                                 </form>
                             </div>
-                        </div>
-                    </article>
-                    {% endfor %}
+                            <div class="line"></div>
+                            {% endfor %}
+                            {% if page.paginator.num_pages > 1 %}
+    <div class="pagination">
+        <div class="pagination-list">
+            {% if page.has_previous %}
+                <div class="pagination-item">
+                    <a href="?page={{ page.previous_page_number }}" class="pagination-link">&laquo;</a>
+                </div>
+            {% endif %}
+
+
+            {% for num in page.paginator.page_range %}
+                <div class="pagination-item {% if num == page.number %}active{% endif %}">
+                    {% if num == page.number %}
+                        <span class="pagination-link">{{ num }}</span>
+                    {% else %}
+                        <a href="?page={{ num }}" class="pagination-link">{{ num }}</a>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            {% if page.has_next %}
+                <div class="pagination-item">
+                    <a href="?page={{ page.next_page_number }}" class="pagination-link">&raquo;</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+                            {% endif %}
                             {% else %}
                              <p>Нет постов :(</p>
                             {% endif %}
+                        </div>
+                    </article>
+
                 </div>
             </div>
         </section>

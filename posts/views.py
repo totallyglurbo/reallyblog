@@ -3,15 +3,21 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView, PasswordChangeView
 from django.urls import reverse, reverse_lazy
-
+from django.core.paginator import Paginator
 from .forms import RegistrationForm, ChangeUserInfoForm
 from django.contrib.auth.decorators import login_required
 from .models import Post
 
 
 def index(request):
-    posts = Post.objects.all()[:50]
-    context = {'posts': posts}
+    posts = Post.objects.all().order_by('-pub_date')[:50]
+    paginator = Paginator(posts, 2)
+    if 'page' in request.GET:
+        page_num = request.GET['page']
+    else:
+        page_num = 1
+    page = paginator.get_page(page_num)
+    context = {'posts': page.object_list, 'page': page}
     return render(request, 'index.html', context)
 
 
@@ -40,10 +46,17 @@ def logout_view(request):
 
 @login_required
 def profile_view(request):
-    posts = Post.objects.filter(author=request.user)
+    posts = Post.objects.filter(author=request.user).order_by('-pub_date')
+    paginator = Paginator(posts, 2)
+    if 'page' in request.GET:
+        page_num = request.GET['page']
+    else:
+        page_num = 1
+    page = paginator.get_page(page_num)
     context = {
-        'posts': posts,
-        'user': request.user
+        'posts': page.object_list,
+        'user': request.user,
+        'page': page
     }
     return render(request, 'profile.html', context)
 

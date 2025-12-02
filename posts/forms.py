@@ -36,4 +36,4 @@ class ChangeUserInfoForm(forms.ModelForm):
 
     class Meta:
         model = ReallyUser
-        fields = ('username', 'email', 'first_name', 'last_name', 'avatar')
+        fields = ('username', 'biography', 'avatar')

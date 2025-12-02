@@ -8,14 +8,23 @@
         </section>
         <section class="articles-wrapper">
             <div class="articles">
+                <h3 class="article-text">Аватар пользователя {{ user.username }} </h3>
+                <h3 class="article-text">Биография: {{ user.biography }}</h3>
                 {% if user.avatar %}
-<img src="{{ user.avatar.url }}" alt="Аватар пользователя">
+<img src="{{ user.avatar.url }}" alt="Аватар пользователя" class="prof-img">
     {% else %}
     <h3>Как вы смогли без аватарки здесь зарегистрироваться???</h3>
     {% endif %}
+                <div class="article-buttons">
+                    <a href="{% url 'user-change' %}" class="button">ИЗМЕНИТЬ ИНФОРМАЦИЮ</a>
+                <a href="{% url 'password-change' %}" class="button">СМЕНИТЬ ПАРОЛЬ</a>
+                    <a href="{% url 'user-delete' %}" class="button">УДАЛИТЬ ПРОФИЛЬ</a>
+                </div>
+
+                <h3 class="article-text">Ваши посты</h3>
+                <div class="line"></div>
                 <div class="four-articles">
                     {% if posts %}
-                    <h3>Ваши посты</h3>
                     {% for post in posts %}
                     <article>
                         <div class="article-inner">
@@ -35,7 +44,36 @@
                             </div>
                         </div>
                     </article>
+                    <div class="line"></div>
                     {% endfor %}
+                    {% if page.paginator.num_pages > 1 %}
+    <div class="pagination">
+        <div class="pagination-list">
+            {% if page.has_previous %}
+                <div class="pagination-item">
+                    <a href="?page={{ page.previous_page_number }}" class="pagination-link">&laquo;</a>
+                </div>
+            {% endif %}
+
+
+            {% for num in page.paginator.page_range %}
+                <div class="pagination-item {% if num == page.number %}active{% endif %}">
+                    {% if num == page.number %}
+                        <span class="pagination-link">{{ num }}</span>
+                    {% else %}
+                        <a href="?page={{ num }}" class="pagination-link">{{ num }}</a>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            {% if page.has_next %}
+                <div class="pagination-item">
+                    <a href="?page={{ page.next_page_number }}" class="pagination-link">&raquo;</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+                            {% endif %}
                             {% else %}
                              <p>Нет постов :(</p>
                             {% endif %}

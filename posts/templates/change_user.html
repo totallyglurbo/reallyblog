@@ -1,13 +1,41 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-<h2>Правка личных данных пользователя {{ user.username }}</h2>
-{% if user.avatar %}
-<img src="{{ user.avatar.url }}" alt="Аватар пользователя">
+
+{% if user.is_authenticated %}
+<section class="title">
+            <h1>Правка личных данных пользователя</h1>
+        </section>
+        <section class="articles-wrapper">
+            <div class="articles">
+                <h3 class="article-text">Аватар пользователя</h3>
+                {% if user.avatar %}
+<img src="{{ user.avatar.url }}" alt="Аватар пользователя" class="prof-img">
+    {% else %}
+    <h3>Как вы смогли без аватарки здесь зарегистрироваться???</h3>
     {% endif %}
-<form method="post" enctype="multipart/form-data" class="form">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Изменить информацию" />
-</form>
+                <div class="four-articles">
+                    <article>
+                        <div class="article-inner">
+                            <div class="article-text">
+                                <div class="calculator-form">
+                                    <form action="" method="post" enctype="multipart/form-data" class="calculator-form-inner">
+                                    {% csrf_token %}
+                                    {{ form.as_p }}
+                                    <input type="submit" value="СОХРАНИТЬ" class="button"/>
+                                </form>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+{% else %}
+<section class="title">
+    <h3>Пожалуйста, войдите в аккаунт.</h3>
+</section>
+{% endif %}
 {% endblock %}

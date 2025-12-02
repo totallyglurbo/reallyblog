@@ -1,17 +1,35 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  {% if user.is_authenticated %}
-<div>
-    <h1>Удаление пользовтеля</h1>
-</div>
-    <p>Вы уверены, что хотите удалить свой аккаунт?</p>
-    <form action="" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-       <input type="submit" value="Удалить"/>
-    </form>
-  {% else %}
-    <p>Пожалуйста, войдите в аккаунт.</p>
-  {% endif %}
+
+{% if user.is_authenticated %}
+<section class="title">
+            <h1>Удаление пользователя</h1>
+        </section>
+        <section class="articles-wrapper">
+            <div class="articles">
+                <h3 class="article-text">Вы уверены, что хотите удалить свой аккаунт?</h3>
+                <div class="four-articles">
+                    <article>
+                        <div class="article-inner">
+                            <div class="article-text">
+                                <div class="calculator-form" id="conff">
+                                    <form action="" method="post" class="calculator-form-inner" id="conf">
+                                    {% csrf_token %}
+                                    {{ form.as_div }}
+                                    <input type="submit" value="УДАЛИТЬ" class="button"/>
+                                </form>
+                                </div>
+                            </div>
+
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+{% else %}
+<section class="title">
+    <h3>Пожалуйста, войдите в аккаунт.</h3>
+</section>
+{% endif %}
 {% endblock %}
