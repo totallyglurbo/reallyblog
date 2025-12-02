@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>ReallyTwt</title>
+</head>
+<body>
+    <p>эщкере сынок</p>
+    {% if posts %}
+        <ul>
+            {% for post in posts %}
+            <li>Автор поста: {{ post.author }}</li>
+            <li>{{ post.post_text }}<</li>
+            <li>Дата создания: {{ post.pub_date }}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>Нет постов :(</p>
+    {% endif %}
+</body>
+</html>
