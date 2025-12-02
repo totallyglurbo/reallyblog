@@ -1,0 +1,35 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+<section class="title">
+            <h1>Изменение комментария</h1>
+        </section>
+        <section class="articles-wrapper">
+            <div class="articles">
+                <div class="four-articles">
+                    <article>
+                        <div class="article-inner">
+                            <div class="article-text">
+                                <div class="calculator-form">
+                                    <form action="" method="post" enctype="multipart/form-data" class="calculator-form-inner">
+                                    {% csrf_token %}
+                                    {{ form.as_p }}
+                                    <input type="submit" value="ОТПРАВИТЬ" class="button"/>
+                                </form>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+{% else %}
+<section class="title">
+    <h3>Пожалуйста, войдите в аккаунт.</h3>
+</section>
+{% endif %}
+{% endblock %}

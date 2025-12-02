@@ -37,3 +37,13 @@ class ChangeUserInfoForm(forms.ModelForm):
     class Meta:
         model = ReallyUser
         fields = ('username', 'biography', 'avatar')
+
+
+class CommentForm(forms.Form):
+    description = forms.CharField(required=True, label="Комментарий")
+
+    def clean(self):
+        cleaned_data = super().clean()
+        description = cleaned_data.get('description')
+
+        return cleaned_data

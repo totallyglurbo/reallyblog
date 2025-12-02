@@ -226,6 +226,7 @@ width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-direction: column;
 }
 .article-text {
     display: flex;
@@ -330,4 +331,7 @@ width: 20em;
 padding: 5em;
 align-items: center;
 justify-content: center;
+}
+.another {
+width: 100%;
 }

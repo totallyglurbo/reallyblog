@@ -17,8 +17,6 @@ class Post(models.Model):
     post_text = models.TextField(verbose_name="Текст поста")
     author = models.ForeignKey('ReallyUser', on_delete=models.CASCADE, verbose_name='Автор поста', null=True)
     pub_date = models.DateTimeField(default=datetime.now, verbose_name="Дата публикации")
-    post_comments = models.ForeignKey('Comment', on_delete=models.CASCADE,
-                                      verbose_name="Комментарии к посту", blank=True, null=True)
 
     def __str__(self):
         return self.post_text
@@ -30,6 +28,13 @@ class Post(models.Model):
 
 class Comment(models.Model):
     comment_text = models.TextField(verbose_name="Текст комментария")
+    post = models.ForeignKey('Post', on_delete=models.CASCADE,
+                                      verbose_name="Комментарий к посту", blank=True, null=True)
+    commenter = models.ForeignKey('ReallyUser', on_delete=models.CASCADE, verbose_name='Автор комментария', null=True)
 
     def __str__(self):
         return self.comment_text
+
+    class Meta:
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'Комментарии'

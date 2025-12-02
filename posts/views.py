@@ -1,12 +1,12 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView, PasswordChangeView
 from django.urls import reverse, reverse_lazy
 from django.core.paginator import Paginator
-from .forms import RegistrationForm, ChangeUserInfoForm
+from .forms import RegistrationForm, ChangeUserInfoForm, CommentForm
 from django.contrib.auth.decorators import login_required
-from .models import Post
+from .models import Post, Comment
 
 
 def index(request):
@@ -88,3 +88,61 @@ def user_change_view(request):
 class ChangingPasswordView(LoginRequiredMixin, PasswordChangeView):
     template_name = 'password_change.html'
     success_url = reverse_lazy('profile')
+
+
+@login_required
+def add_comment(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment_text = form.cleaned_data.get('description')
+            Comment.objects.create(
+                post=post,
+                comment_text=comment_text if comment_text else '',
+                commenter=request.user
+            )
+            return redirect('index')
+        else:
+            pass
+    else:
+        form = CommentForm()
+    context = {
+        'post': post,
+        'form': form,
+    }
+    return render(request, 'add_comment.html', context)
+
+
+@login_required
+def delete_comment(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+
+    if request.user != comment.commenter:
+        return redirect('index')
+
+    if request.method == 'POST':
+        comment.delete()
+        return redirect('index')
+
+    return redirect('index')
+
+
+@login_required
+def edit_comment(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+
+    if request.user != comment.commenter:
+        return redirect('index')
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment.comment_text = form.cleaned_data['description']
+            comment.save()
+            return redirect('index')
+    else:
+        form = CommentForm(initial={'description': comment.comment_text})
+
+    context = {'form': form, 'comment': comment}
+    return render(request, 'edit_comment.html', context)
