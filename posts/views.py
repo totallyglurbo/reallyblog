@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Count
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView, PasswordChangeView
@@ -10,7 +11,7 @@ from .models import Post, Comment
 
 
 def index(request):
-    posts = Post.objects.all().order_by('-pub_date')[:50]
+    posts = Post.objects.annotate(comment_count=Count('comment', distinct=True), likes_count=Count('likes', distinct=True)).order_by('-pub_date')[:50]
     paginator = Paginator(posts, 2)
     if 'page' in request.GET:
         page_num = request.GET['page']
@@ -146,3 +147,16 @@ def edit_comment(request, pk):
 
     context = {'form': form, 'comment': comment}
     return render(request, 'edit_comment.html', context)
+
+
+@login_required
+def toggle_like(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    user = request.user
+
+    if user in post.likes.all():
+        post.likes.remove(user)
+    else:
+        post.likes.add(user)
+
+    return redirect('index')

@@ -16,15 +16,32 @@
                                 <h3>Автор поста: {{ post.author }}</h3>
                                 <p>{{ post.post_text }}</p>
                                 <p>Дата создания: {{ post.pub_date }}</p>
+                                 {% if request.user.is_authenticated %} {# Только для авторизованных пользователей #}
+            <p class="lele">
+                <a href="{% url 'toggle_like' pk=post.pk %}">
+                    {% if request.user in post.likes.all %}
+                        Уже не нравится
+                    {% else %}
+                        Нравится
+                    {% endif %}
+                </a>
+                <span>Отметок "нравится": {{ post.likes_count }}</span>
+            </p>
+        {% else %}
+            <p>Отметок "нравится": {{ post.likes_count }}</p>
+        {% endif %}
+
+        <p>Комментарии: {{ post.comment_count }}</p>
+
                             </div>
                             <div class="article-buttons">
                                 {% for comment in post.comment_set.all %}
         <p class="comment">{{ comment.commenter.username }}: {{ comment.comment_text }}</p>
                                  {% if request.user == comment.commenter %}
-                            <a href="{% url 'edit-comment' pk=comment.pk %}"><b>Изменить?</b></a>
+                            <a href="{% url 'edit-comment' pk=comment.pk %}" class="change"><b>Изменить комментарий?</b></a>
                             <form action="{% url 'delete-comment' pk=comment.pk %}" method="post">
                                 {% csrf_token %}
-                                <input type="submit" value="Удалить"/>
+                                <input type="submit" value="Удалить комментарий" class="button"/>
                             </form>
                         {% endif %}
     {% endfor %}

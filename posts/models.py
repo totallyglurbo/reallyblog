@@ -2,6 +2,7 @@ from datetime import datetime
 
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.conf import settings
 
 
 class ReallyUser(AbstractUser):
@@ -17,6 +18,7 @@ class Post(models.Model):
     post_text = models.TextField(verbose_name="Текст поста")
     author = models.ForeignKey('ReallyUser', on_delete=models.CASCADE, verbose_name='Автор поста', null=True)
     pub_date = models.DateTimeField(default=datetime.now, verbose_name="Дата публикации")
+    likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="liked_posts", blank=True)
 
     def __str__(self):
         return self.post_text

@@ -15,25 +15,45 @@
     {% else %}
     <h3>Как вы смогли без аватарки здесь зарегистрироваться???</h3>
     {% endif %}
-                <div class="article-buttons">
-                    <a href="{% url 'user-change' %}" class="button">ИЗМЕНИТЬ ИНФОРМАЦИЮ</a>
-                <a href="{% url 'password-change' %}" class="button">СМЕНИТЬ ПАРОЛЬ</a>
-                    <a href="{% url 'user-delete' %}" class="button">УДАЛИТЬ ПРОФИЛЬ</a>
-                </div>
-
-                <h3 class="article-text">Ваши посты</h3>
-                <div class="line"></div>
                 <div class="four-articles">
                     {% if posts %}
                     {% for post in posts %}
                     <article>
                         <div class="article-inner">
                             <div class="article-text">
+                                <h3>Автор поста: {{ post.author }}</h3>
                                 <p>{{ post.post_text }}</p>
                                 <p>Дата создания: {{ post.pub_date }}</p>
+                                 {% if request.user.is_authenticated %} {# Только для авторизованных пользователей #}
+            <p class="lele">
+                <a href="{% url 'toggle_like' pk=post.pk %}">
+                    {% if request.user in post.likes.all %}
+                        Уже не нравится
+                    {% else %}
+                        Нравится
+                    {% endif %}
+                </a>
+                <span>Отметок "нравится": {{ post.likes_count }}</span>
+            </p>
+        {% else %}
+            <p>Отметок "нравится": {{ post.likes_count }}</p>
+        {% endif %}
+
+        <p>Комментарии: {{ post.comment_count }}</p>
+
                             </div>
                             <div class="article-buttons">
-                                <a href="#" class="button">ПРОКОММЕНТИРОВАТЬ</a>
+                                {% for comment in post.comment_set.all %}
+        <p class="comment">{{ comment.commenter.username }}: {{ comment.comment_text }}</p>
+                                 {% if request.user == comment.commenter %}
+                            <a href="{% url 'edit-comment' pk=comment.pk %}" class="change"><b>Изменить комментарий?</b></a>
+                            <form action="{% url 'delete-comment' pk=comment.pk %}" method="post">
+                                {% csrf_token %}
+                                <input type="submit" value="Удалить комментарий" class="button"/>
+                            </form>
+                        {% endif %}
+    {% endfor %}
+                                <a href="{% url 'add-comment' pk=post.pk %}" class="button">ПРОКОММЕНТИРОВАТЬ</a>
                                 <form>
                                     <div class="favourite">
                                         <input class="fav-input" type="checkbox" id="fav1" checked>
@@ -42,11 +62,9 @@
                                     </div>
                                 </form>
                             </div>
-                        </div>
-                    </article>
-                    <div class="line"></div>
-                    {% endfor %}
-                    {% if page.paginator.num_pages > 1 %}
+                            <div class="line"></div>
+                            {% endfor %}
+                            {% if page.paginator.num_pages > 1 %}
     <div class="pagination">
         <div class="pagination-list">
             {% if page.has_previous %}
@@ -77,10 +95,12 @@
                             {% else %}
                              <p>Нет постов :(</p>
                             {% endif %}
+                        </div>
+                    </article>
+
                 </div>
             </div>
         </section>
-{% else %}
 <section class="title">
     <h3>Пожалуйста, войдите в аккаунт.</h3>
 </section>
