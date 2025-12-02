@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0">
+    <title>ReallyTwt</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+</head>
+<body>
+    <header class="header-wrapper">
+        <div class="header">
+            <a class="logo" href="{% url 'index' %}">
+                <img src="{% static 'media/logo.svg' %}" alt="Логотип">
+                <div class="logo-wrapper">
+                    <h1>Почти</h1>
+                    <h3>не тв*тт*р</h3>
+                </div>
+            </a>
+            <nav class="header-nav">
+                <a href="{% url 'index' %}">ГЛАВНАЯ</a>
+                {% if user.is_authenticated %}
+                <p class="like-link">ПОЛЬЗОВАТЕЛЬ: {{ user.get_username }}</p>
+                <a href="{% url 'profile' %}">ПРОФИЛЬ</a>
+                <a href="{% url 'logout' %}">ВЫХОД</a>
+                <a href="#">СОЗДАТЬ ПОСТ</a>
+                {% else %}
+                    <a href="{% url 'login' %}">ВОЙТИ</a>
+                    <a href="{% url 'register' %}">РЕГИСТРАЦИЯ</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer>
+        <div class="footer-wrapper">
+            <a class="logo" href="{% url 'index' %}">
+                <img src="{% static 'media/footer-logo.svg' %}" alt="Логотип">
+                <div class="logo-wrapper">
+                    <h1>Почти</h1>
+                    <h3>не тв*тт*р</h3>
+                </div>
+            </a>
+                <nav class="footer-nav">
+                    <a href="{% url 'index' %}">ГЛАВНАЯ</a>
+                {% if user.is_authenticated %}
+                <p class="like-link-f">ПОЛЬЗОВАТЕЛЬ: {{ user.get_username }}</p>
+                <a href="{% url 'profile' %}">ПРОФИЛЬ</a>
+                {% else %}
+                    <a href="{% url 'login' %}">ВОЙТИ</a>
+                    <a href="{% url 'register' %}">РЕГИСТРАЦИЯ</a>
+                {% endif %}
+                </nav>
+        </div>
+    </footer>
+</body>
+</html>

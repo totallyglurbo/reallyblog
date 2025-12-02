@@ -1,0 +1,31 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<section class="title">
+            <h1>Регистрация</h1>
+        </section>
+        <section class="articles-wrapper">
+            <div class="articles">
+                <div class="four-articles">
+                    {% if user.is_authenticated %}
+                    <article>
+                        <div class="article-inner">
+                            <div class="article-text">
+                                <h3>Вы уже зарегистрированы.</h3>
+                                {% else %}
+                                <div class="calculator-form">
+                                    <form action="" method="post" enctype="multipart/form-data" class="calculator-form-inner">
+                                    {% csrf_token %}
+                                    {{ form.as_p }}
+                                    <input type="submit" value="ЗАРЕГИСТРИРОВАТЬСЯ" class="button"/>
+                                </form>
+                                </div>
+                                {% endif %}
+                            </div>
+
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+{% endblock %}

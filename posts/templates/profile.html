@@ -2,18 +2,24 @@
 
 {% block content %}
 
+{% if user.is_authenticated %}
 <section class="title">
-            <h1>Все посты</h1>
+            <h1>Ваш профиль</h1>
         </section>
         <section class="articles-wrapper">
             <div class="articles">
+                {% if user.avatar %}
+<img src="{{ user.avatar.url }}" alt="Аватар пользователя">
+    {% else %}
+    <h3>Как вы смогли без аватарки здесь зарегистрироваться???</h3>
+    {% endif %}
                 <div class="four-articles">
                     {% if posts %}
+                    <h3>Ваши посты</h3>
                     {% for post in posts %}
                     <article>
                         <div class="article-inner">
                             <div class="article-text">
-                                <h3>Автор поста: {{ post.author }}</h3>
                                 <p>{{ post.post_text }}</p>
                                 <p>Дата создания: {{ post.pub_date }}</p>
                             </div>
@@ -36,4 +42,9 @@
                 </div>
             </div>
         </section>
+{% else %}
+<section class="title">
+    <h3>Пожалуйста, войдите в аккаунт.</h3>
+</section>
+{% endif %}
 {% endblock %}
