@@ -1,10 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base_generic.html" %}
 
-</body>
-</html>
+{% block content %}
+
+{% if user.is_authenticated %}
+<section class="title">
+            <h1>Изменение поста</h1>
+        </section>
+        <section class="articles-wrapper">
+            <div class="articles">
+                <div class="four-articles">
+                    <article>
+                        <div class="article-inner">
+                            <div class="article-text">
+                                <div class="calculator-form another">
+                                    <form action="" method="post" enctype="multipart/form-data" class="calculator-form-inner">
+                                    {% csrf_token %}
+                                    {{ form.as_p }}
+                                    <input type="submit" value="СОХРАНИТЬ" class="button"/>
+                                </form>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+{% else %}
+<section class="title">
+    <h3>Пожалуйста, войдите в аккаунт.</h3>
+</section>
+{% endif %}
+{% endblock %}

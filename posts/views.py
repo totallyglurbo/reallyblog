@@ -5,7 +5,9 @@ from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView, PasswordChangeView
 from django.urls import reverse, reverse_lazy
 from django.core.paginator import Paginator
-from .forms import RegistrationForm, ChangeUserInfoForm, CommentForm
+from django.views.generic import CreateView
+
+from .forms import RegistrationForm, ChangeUserInfoForm, CommentForm, PostForm
 from django.contrib.auth.decorators import login_required
 from .models import Post, Comment
 
@@ -60,6 +62,45 @@ def profile_view(request):
         'page': page
     }
     return render(request, 'profile.html', context)
+
+
+class PostCreate(CreateView):
+    model = Post
+    template_name = 'create_post.html'
+    form_class = PostForm
+    success_url = reverse_lazy('index')
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+@login_required
+def post_delete_view(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if post.author != request.user:
+        return redirect('index')
+    if request.method == 'POST':
+        post.delete()
+        return redirect(reverse('profile'))
+    return render(request, 'delete_post.html', {'post': post})
+
+
+@login_required
+def post_change_view(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if post.author != request.user:
+        return redirect('index')
+    if request.method == 'POST':
+        form = PostForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('profile'))
+        else:
+            return render(request, 'change_post.html', {'form': form})
+    else:
+        form = PostForm(instance=request.user)
+
+    return render(request, 'change_post.html', {'form': form})
 
 
 @login_required

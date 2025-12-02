@@ -225,7 +225,6 @@ width: 100%;
 .article-buttons {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     flex-direction: column;
 }
 .article-text {
@@ -301,9 +300,7 @@ max-width: 25%;
 border-radius: 0.8em;
 align-self: center;
 }
-.article-text {
-align-items: center;
-}
+
 .pagination {
 align-self: center;
 display: flex;

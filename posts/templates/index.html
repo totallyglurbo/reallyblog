@@ -24,6 +24,10 @@
                     {% else %}
                         Нравится
                     {% endif %}
+                    {% if request.user == post.author %}
+                        <a href="{% url 'edit-post' pk=post.pk %}" class="change"><b>Изменить пост?</b></a>
+                        <a href="{% url 'delete-post' pk=post.pk %}" class="change"><b>Удалить пост?</b></a>
+                    {% endif %}
                 </a>
                 <span>Отметок "нравится": {{ post.likes_count }}</span>
             </p>

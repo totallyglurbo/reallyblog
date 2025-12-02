@@ -24,7 +24,7 @@
                 <p class="like-link">ПОЛЬЗОВАТЕЛЬ: {{ user.get_username }}</p>
                 <a href="{% url 'profile' %}">ПРОФИЛЬ</a>
                 <a href="{% url 'logout' %}">ВЫХОД</a>
-                <a href="#">СОЗДАТЬ ПОСТ</a>
+                <a href="{% url 'create' %}">СОЗДАТЬ ПОСТ</a>
                 {% else %}
                     <a href="{% url 'login' %}">ВОЙТИ</a>
                     <a href="{% url 'register' %}">РЕГИСТРАЦИЯ</a>

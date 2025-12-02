@@ -47,3 +47,10 @@ class CommentForm(forms.Form):
         description = cleaned_data.get('description')
 
         return cleaned_data
+
+
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ('post_text',)
+
