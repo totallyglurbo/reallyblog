@@ -4,18 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="00410df5-661f-4c8d-a96a-5bea7c6f5770" name="Changes" comment="added fully working likes">
+    <list default="true" id="00410df5-661f-4c8d-a96a-5bea7c6f5770" name="Changes" comment="added creating, changing and deleting posts">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/posts/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/posts/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/posts/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/posts/static/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/posts/templates/base_generic.html" beforeDir="false" afterPath="$PROJECT_DIR$/posts/templates/base_generic.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/posts/templates/change_post.html" beforeDir="false" afterPath="$PROJECT_DIR$/posts/templates/change_post.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/posts/templates/create_post.html" beforeDir="false" afterPath="$PROJECT_DIR$/posts/templates/create_post.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/posts/templates/edit_comment.html" beforeDir="false" afterPath="$PROJECT_DIR$/posts/templates/edit_comment.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/posts/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/posts/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/posts/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/posts/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/posts/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/posts/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -137,7 +127,15 @@
       <option name="project" value="LOCAL" />
       <updated>1764713360266</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="added creating, changing and deleting posts">
+      <option name="closed" value="true" />
+      <created>1764715283050</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1764715283050</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -147,6 +145,7 @@
     <MESSAGE value="added all shenanigans with users, including changing info and deleting accounts" />
     <MESSAGE value="added fully working comments" />
     <MESSAGE value="added fully working likes" />
-    <option name="LAST_COMMIT_MESSAGE" value="added fully working likes" />
+    <MESSAGE value="added creating, changing and deleting posts" />
+    <option name="LAST_COMMIT_MESSAGE" value="added creating, changing and deleting posts" />
   </component>
 </project>
